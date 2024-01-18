@@ -1,0 +1,23 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "simple JS command line calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knightmac19/node-calculator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knightmac19/node-calculator/issues"
+  },
+  "homepage": "https://github.com/knightmac19/node-calculator#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
