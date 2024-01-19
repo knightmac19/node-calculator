@@ -1,63 +1,39 @@
 const readlineSync = require("readline-sync");
+const limit = ["+", "-", "*", "/"];
 
-let validInitialQuery = false;
-let validFirstNum = false;
-let validSecondNum = false;
-let operation = "";
-let firstNum = "";
-let secondNum = "";
-let possibilities = "1234567890";
+const getOperator = (limit) => {
+  while (true) {
+    // prettier-ignore
+    const operation = readlineSync.question(`What operation would you like to perform? (Options: ${limit.join(", ")})   `);
 
-while (validInitialQuery === false) {
-  operation = readlineSync.question(
-    "What operation would you like to perform? (Options: /, *, +, - )   "
-  );
-
-  if (
-    operation !== "/" &&
-    operation !== "*" &&
-    operation !== "+" &&
-    operation !== "-"
-  ) {
-    console.log("\n");
-    console.log("That is not a valid operation. Please enter /, *, +, or -");
-  } else {
-    validInitialQuery = true;
+    if (!limit.includes(operation)) {
+      console.log("\n");
+      console.log(
+        `That is not a valid operation. Please enter ${limit.join(", ")})   `
+      );
+    } else {
+      return operation;
+    }
   }
-}
+};
 
-while (validFirstNum === false) {
-  firstNum = readlineSync.question("Please enter the first number:   ");
-  let possibilities = "1234567890";
+const getNumber = (str, operation = "false") => {
+  while (true) {
+    const num = readlineSync.question(`Please enter the ${str} number:   `);
 
-  if (isNaN(firstNum)) {
-    console.log("\n");
-    console.log("That is not a valid input. Please enter a number");
-  } else {
-    validFirstNum = true;
+    if (isNaN(num) || num === "") {
+      console.log("\n");
+      console.log("That is not a valid input. Please enter a number");
+    } else if (str === "second" && operation === "/" && num === "0") {
+      console.log("\n");
+      console.log(
+        "Invalid input. Division by 0 is not permitted. Please enter a positive number"
+      );
+    } else {
+      return +num;
+    }
   }
-}
-while (validSecondNum === false) {
-  secondNum = readlineSync.question("Please enter the second number:   ");
-
-  let possibilities = "1234567890";
-
-  if (operation === "/") {
-    possibilities = "123456789";
-  }
-
-  if (isNaN(secondNum)) {
-    console.log("\n");
-    console.log("That is not a valid input. Please enter a number");
-  } else if (operation === "/" && secondNum === "0") {
-    console.log("\n");
-    console.log(
-      "Invalid input. Division by 0 is not permitted. Please enter a positive number"
-    );
-  } else {
-    validSecondNum = true;
-  }
-}
+};
 
 const runCalculation = (operator, first, second) => {
   let result = 0;
@@ -79,8 +55,15 @@ const runCalculation = (operator, first, second) => {
   }
 };
 
-let firstInt = parseInt(firstNum);
-let secondInt = parseInt(secondNum);
+const calculator = (limit) => {
+  const operation = getOperator(limit);
+  const firstInt = getNumber("first");
+  const secondInt = getNumber("second", operation);
 
-console.log("\n");
-console.log(`The result is: ${runCalculation(operation, firstInt, secondInt)}`);
+  console.log("\n");
+  console.log(
+    `The result is: ${runCalculation(operation, firstInt, secondInt)}`
+  );
+};
+
+calculator(limit);
