@@ -6,6 +6,7 @@ let validSecondNum = false;
 let operation = "";
 let firstNum = "";
 let secondNum = "";
+let possibilities = "1234567890";
 
 while (validInitialQuery === false) {
   operation = readlineSync.question(
@@ -29,9 +30,9 @@ while (validFirstNum === false) {
   firstNum = readlineSync.question("Please enter the first number:   ");
   let possibilities = "1234567890";
 
-  if (!possibilities.includes(firstNum) || firstNum.length > 1) {
+  if (isNaN(firstNum)) {
     console.log("\n");
-    console.log("That is not a valid input. Please enter a single number 0-9");
+    console.log("That is not a valid input. Please enter a number");
   } else {
     validFirstNum = true;
   }
@@ -45,16 +46,13 @@ while (validSecondNum === false) {
     possibilities = "123456789";
   }
 
-  if (
-    !possibilities.includes(secondNum) ||
-    (secondNum.length > 1 && operation !== "/")
-  ) {
+  if (isNaN(secondNum)) {
     console.log("\n");
-    console.log("That is not a valid input. Please enter a single number 0-9");
+    console.log("That is not a valid input. Please enter a number");
   } else if (operation === "/" && secondNum === "0") {
     console.log("\n");
     console.log(
-      "Invalid input. Division by 0 is not permitted. Enter a number 1-9"
+      "Invalid input. Division by 0 is not permitted. Please enter a positive number"
     );
   } else {
     validSecondNum = true;
